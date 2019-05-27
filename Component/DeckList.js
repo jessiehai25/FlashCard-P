@@ -1,33 +1,33 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, Platform, TouchableOpacity} from 'react-native'
+import {View, ScrollView, Text, StyleSheet, Platform, TouchableOpacity} from 'react-native'
 import {connect} from 'react-redux'
 import {getDecks} from '../utils/api'
 import {receiveDecks} from '../actions'
 import {data} from '../utils/_data'
+import DeckIndi from './DeckIndi'
+
 
 
 class DeckList extends Component {
 	componentDidMount(){
 		const {dispatch} = this.props
 		getDecks()
-		.then(decks=> {
-			dispatch(receiveDecks(decks))})
+		.then((decks) => 
+			dispatch(receiveDecks(decks)))
 	}
-	handleSubmit = (deck) => {
-		alert(deck)
-	}
-	render(){
-		
+
+	render(){	
 		const {decks} = this.props
 		return(
-			<View style = {styles.container}>
-				<Text>{JSON.stringify(decks)}</Text>
-				
-				{/*{Object.keys(decks).map((deck)=>(
+			<ScrollView style = {styles.container}>
+				{Object.keys(decks).map((deck)=>(
 						<TouchableOpacity
 							key = {deck} 
 							style = {styles.deckBox}
-							onPress = {()=>this.handleSubmit(deck)}
+							onPress = {()=>{
+								this.props.navigation.navigate('DeckIndi', {deck: deck})
+							}}
+							title = 'deck list'
 						>
 							<Text style = {styles.deckTitle}>
 								{deck}
@@ -37,9 +37,8 @@ class DeckList extends Component {
 							</Text>
 						</TouchableOpacity>
 				))}
-			*/}
 
-			</View>
+			</ScrollView>
 		)
 	}
 }
@@ -86,7 +85,9 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps (decks) {
-	return decks
+	return {
+		decks
+	}
 }
 
 export default connect(mapStateToProps)(DeckList)

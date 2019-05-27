@@ -4,22 +4,34 @@ import {connect} from 'react-redux'
 import {getInitialData} from '../utils/api'
 import {receiveDecks, handleInitialData} from '../actions'
 import {data} from '../utils/_data'
-
+import {getDecks} from '../utils/api'
+import AddQuestion from './AddQuestion'
+import Quiz from './Quiz'
+ 
 class DeckIndi extends Component {
-	addQ = (deck)=>{
+	static navigationOptions = ({navigation}) => {
+		const {deck} = navigation.state.params
+		return {
+			title: deck
+		}
+	}
 
+	addQ = (deck)=>{
+		console.log(deck)
+		this.props.navigation.navigate('AddQuestion', {deck: deck})
 	}
 	quiz = (deck, questionsNumber)=>{
 		if(questionsNumber===0){
 			alert('Sorry, you cannot take a quiz because there are no cards in the deck.')
 		}
-		alert(`${questionsNumber}`)
+		this.props.navigation.navigate('Quiz', {entryId: deck})
 	}
 	render(){
-		const {questionsNumber, deck} = this.props
+		const deck = this.props.navigation.state.params.deck
+		const {decks} = this.props
+		const questionsNumber= decks ? decks[deck].questions.length : 0
 		return(
 			<View style = {styles.deckBox}>
-				<Text style = {styles.deckTitle}>{deck}</Text>
 				<Text style = {styles.deckDetails}>
 					Number of Questions: {questionsNumber}
 				</Text>
@@ -68,7 +80,7 @@ const styles = StyleSheet.create({
 	},
 	deckDetails:{
 		color: '#007AFF',
-		fontSize: 15,
+		fontSize: 25,
 		justifyContent: 'center',
 		alignItems: 'center',
 		marginTop: 8,
@@ -98,11 +110,10 @@ const styles = StyleSheet.create({
 	}
 })
 
-function mapStateToProps ({decks}, {deck}) {
-	decks = data
+function mapStateToProps (decks) {
+
 	return{
-		questionsNumber: decks[deck].questions.length,
-		deck: deck,
+		decks,
 	}
 }
 

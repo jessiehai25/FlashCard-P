@@ -3,7 +3,6 @@ import {AsyncStorage} from 'react-native'
 
 
 export const getInitialData = () => {
-  
   return data;
 }
 
@@ -30,6 +29,15 @@ export function saveDeckTitle (title){
     [title]: {
       title: title,
       questions: []
+    }
+  }))
+}
+
+export function addCardToDeck (title, card){
+  return AsyncStorage.mergeItem(DATA_KEY, JSON.stringify({
+    [title]:{
+      title: title,
+      questions: question
     }
   }))
 }
