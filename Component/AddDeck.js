@@ -17,7 +17,7 @@ class AddDeck extends Component {
   		const {text} = this.state
   		saveDeckTitle(text)
   		this.props.dispatch(addDeck(text))
-  		this.props.navigation.navigate('DeckList')
+  		this.props.navigation.navigate('DeckIndi', {deck: text})
   		this.setState(()=>{
   			text: ''
   		})
