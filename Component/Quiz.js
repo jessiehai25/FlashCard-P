@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import QuizIndi from './QuizIndi'
 import {AntDesign, Ionicons, MaterialCommunityIcons} from '@expo/vector-icons'
 
+
+
 class Quiz extends Component{
 	state = {
 		score: 0,
@@ -28,6 +30,10 @@ class Quiz extends Component{
 			score: 0
 		}))
 	}
+
+	goBack = () => {
+		this.props.navigation.goBack()
+	}
 	render(){
 		const {decks} = this.props
 		const deck = this.props.navigation.state.params.deck
@@ -44,7 +50,7 @@ class Quiz extends Component{
 						color = {'#007AFF'}
 					/>
 					<Text style = {styles.header}>Your Score :</Text>
-					<Text style = {styles.header}>{score/totalQuestions*100}</Text>
+					<Text style = {styles.header}>{Math.round(score/totalQuestions*100)}%</Text>
 					<TouchableOpacity 
 						style = {[styles.btn, {borderColor: '#007AFF',borderWidth: 0.5,backgroundColor:'#007AFF'}]}
 						onPress = {this.restart}
@@ -56,6 +62,19 @@ class Quiz extends Component{
 							size = {20}
 						/>
 						<Text style={styles.btnText}>Restart the quiz</Text>
+					</View>
+					</TouchableOpacity>
+					<TouchableOpacity 
+						style = {[styles.btn, {borderColor: '#007AFF',borderWidth: 0.5,backgroundColor:'#007AFF'}]}
+						onPress = {this.goBack}
+					>
+					<View style = {{flexDirection : 'row'}}>
+						<AntDesign 
+							name = 'book'
+							color = 'white'
+							size = {20}
+						/>
+						<Text style={styles.btnText}> Back to Deck</Text>
 					</View>
 					</TouchableOpacity>
 				</View>

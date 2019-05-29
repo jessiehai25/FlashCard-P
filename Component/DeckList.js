@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, ScrollView, Text, StyleSheet, Platform, TouchableOpacity} from 'react-native'
+import {View, ScrollView, Text, StyleSheet, Platform, TouchableOpacity, Animated} from 'react-native'
 import {connect} from 'react-redux'
 import {getDecks} from '../utils/api'
 import {receiveDecks} from '../actions'
@@ -10,15 +10,21 @@ import UdaciStatusBar from './UdaciStatusBar'
 
 
 class DeckList extends Component {
+	state = {
+		opacity : new Animated.Value(1),
+		bounceValue : new Animated.Value(1) 
+	}
 	componentDidMount(){
 		const {dispatch} = this.props
 		getDecks()
 		.then((decks) => 
 			dispatch(receiveDecks(decks)))
+
 	}
 
-	render(){	
 
+	render(){	
+		const {opacity, bounceValue} = this.state
 		const {decks} = this.props
 		return(
 			<ScrollView style = {styles.container}>
@@ -27,17 +33,23 @@ class DeckList extends Component {
 						<TouchableOpacity
 							key = {deck} 
 							style = {styles.deckBox}
+							title = 'deck list'
 							onPress = {()=>{
+								Animated.sequence([
+									Animated.timing(bounceValue, {toValue:1.05, duration: 50000}),
+									Animated.spring(bounceValue, {toValue:1, friction: 4})
+								]).start()
 								this.props.navigation.navigate('DeckIndi', {deck: deck})
 							}}
-							title = 'deck list'
 						>
-							<Text style = {styles.deckTitle}>
-								{deck}
-							</Text>
-							<Text style = {styles.deckDetails}>
-								Number of Questions: {decks[deck].questions.length}
-							</Text>
+							<Animated.View style = {{opacity}}>
+								<Text style = {styles.deckTitle}>
+									{deck}
+								</Text>
+								<Text style = {styles.deckDetails}>
+									Number of Questions: {decks[deck].questions.length}
+								</Text>
+							</Animated.View>
 						</TouchableOpacity>
 				))}
 

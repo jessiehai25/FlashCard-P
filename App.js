@@ -11,6 +11,7 @@ import AddQuestion from './Component/AddQuestion'
 import Quiz from './Component/Quiz'
 import {FontAwesome, MaterialCommunityIcons, Ionicons} from '@expo/vector-icons'
 import {createBottomTabNavigator, createMaterialTopTabNavigator, createAppContainer, createStackNavigator} from 'react-navigation'
+import {setLocalNotification} from './utils/api'
 
 const RouteConfigs = {
   DeckList:{
@@ -81,6 +82,9 @@ const MainNavigator = createStackNavigator({
 const Container = createAppContainer(MainNavigator)
 
 export default class App extends React.Component {
+  componentDidMount(){
+    setLocalNotification()
+  }
   render() {
     return (
       <Provider store = {createStore(reducer)}>

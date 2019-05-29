@@ -7,6 +7,7 @@ import {data} from '../utils/_data'
 import {getDecks} from '../utils/api'
 import AddQuestion from './AddQuestion'
 import Quiz from './Quiz'
+import {clearLocalNotification, setLocalNotification} from '../utils/api'
  
 class DeckIndi extends Component {
 	static navigationOptions = ({navigation}) => {
@@ -23,7 +24,8 @@ class DeckIndi extends Component {
 		if(questionsNumber===0){
 			alert('Sorry, you cannot take a quiz because there are no cards in the deck.')
 		}
-		console.log('quizbutton', questionsNumber)
+		clearLocalNotification()
+			.then(setLocalNotification)
 		this.props.navigation.navigate('Quiz', {deck: deck})
 	}
 	render(){
