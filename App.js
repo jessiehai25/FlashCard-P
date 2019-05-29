@@ -12,15 +12,6 @@ import Quiz from './Component/Quiz'
 import {FontAwesome, MaterialCommunityIcons, Ionicons} from '@expo/vector-icons'
 import {createBottomTabNavigator, createMaterialTopTabNavigator, createAppContainer, createStackNavigator} from 'react-navigation'
 
-
-function UdaciStatusBar ({backgroundColor, ...props}) {
-  return(
-    <View style = {{backgroundColor, height: Constants.statusBarHeight}}>
-      <StatusBar translucent backgroundColor={backgroundColor}{...props} />
-    </View>
-  )
-}
-
 const RouteConfigs = {
   DeckList:{
     screen: DeckList,
@@ -34,7 +25,7 @@ const RouteConfigs = {
   AddDeck: {
     screen: AddDeck,
     navigationOptions: {
-      tabBarLabel: "Add Deck",
+      tabBarLabel: "Create Deck",
       tabBarIcon: ({ tintColor }) => (
         <FontAwesome name='plus-square' size = {30} color={tintColor} />
       )
@@ -75,8 +66,11 @@ const MainNavigator = createStackNavigator({
   DeckIndi:{
     screen: DeckIndi,
   },
-  AddQuiz:{
+  Quiz:{
     screen: Quiz,
+    navigationOptions:{
+      title: "Quiz"
+    }
   },
   AddQuestion:{
     screen: AddQuestion,
@@ -91,7 +85,7 @@ export default class App extends React.Component {
     return (
       <Provider store = {createStore(reducer)}>
         <View style={{flex:1}}>
-        <UdaciStatusBar />
+        {/*<UdaciStatusBar />*/}
           <Container/>
           {/*<DeckIndi deck="React"/>*/}
         </View>

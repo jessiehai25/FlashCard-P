@@ -17,14 +17,14 @@ class DeckIndi extends Component {
 	}
 
 	addQ = (deck)=>{
-		console.log(deck)
 		this.props.navigation.navigate('AddQuestion', {deck: deck})
 	}
 	quiz = (deck, questionsNumber)=>{
 		if(questionsNumber===0){
 			alert('Sorry, you cannot take a quiz because there are no cards in the deck.')
 		}
-		this.props.navigation.navigate('Quiz', {entryId: deck})
+		console.log('quizbutton', questionsNumber)
+		this.props.navigation.navigate('Quiz', {deck: deck})
 	}
 	render(){
 		const deck = this.props.navigation.state.params.deck
@@ -36,10 +36,10 @@ class DeckIndi extends Component {
 					Number of Questions: {questionsNumber}
 				</Text>
 				<TouchableOpacity style = {styles.btn} onPress = {()=>this.addQ(deck)}>
-					<Text style = {styles.btnText}>Add Quesion</Text>
+					<Text style = {styles.btnText}>Add Card</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style = {styles.btn} onPress = {()=>this.quiz(deck, questionsNumber)}>
-					<Text style = {styles.btnText}>Start Quiz</Text>
+					<Text style = {styles.btnText}>Start a Quiz</Text>
 				</TouchableOpacity>
 			</View>
 
@@ -48,12 +48,9 @@ class DeckIndi extends Component {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		marginLeft: 10,
-		marginRight: 10,
-	},
-	deckBox:{
+	deckBox:{		
+		justifyContent: 'center',
+		alignItems: 'center',
 		borderColor: '#007AFF',
 		borderWidth: 0.5,
 		borderRadius: Platform.OS === 'ios' ? 16 : 2,
@@ -62,8 +59,6 @@ const styles = StyleSheet.create({
 		marginRight: 10,
 		marginTop: 17,
 		marginBottom: 17,
-		justifyContent: 'flex-start',
-		alignItems: 'center',
 		shadowRadius: 3,
 		shadowOpacity: 0.8,
 		shadowColor: 'rgba(0,0,0,0.24)',
@@ -71,12 +66,6 @@ const styles = StyleSheet.create({
 			width: 0,
 			height: 3,
 		},
-	},
-	deckTitle:{
-		color: '#007AFF',
-		justifyContent: 'center',
-		alignItems: 'center',
-		fontSize: 35,
 	},
 	deckDetails:{
 		color: '#007AFF',

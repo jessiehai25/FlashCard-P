@@ -20,15 +20,20 @@ export default function decks(state = {}, action){
 				...newDeck
 			}
 		case ADD_CARD_TO_DECK : 
-			const {newQuestion, deck} = action
+			const {deck, newQuestion} = action
+			console.log("reducer",state[deck])
+			let deckWNq = {}
+			deckWNq = {
+				[deck]:{
+					...state[deck],
+					questions: state[deck].questions.concat([newQuestion])
+				}
+			}
 			return {
 				...state,
-				[deck]: {
-					...state[deck],
-					questions: [...state[deck].questions, newQuestion]
-				}
-
+				...deckWNq,
 			}
+
 		default:
 			return state	
 	}

@@ -5,6 +5,7 @@ import {getDecks} from '../utils/api'
 import {receiveDecks} from '../actions'
 import {data} from '../utils/_data'
 import DeckIndi from './DeckIndi'
+import UdaciStatusBar from './UdaciStatusBar'
 
 
 
@@ -17,9 +18,11 @@ class DeckList extends Component {
 	}
 
 	render(){	
+
 		const {decks} = this.props
 		return(
 			<ScrollView style = {styles.container}>
+				<UdaciStatusBar/>
 				{Object.keys(decks).map((deck)=>(
 						<TouchableOpacity
 							key = {deck} 

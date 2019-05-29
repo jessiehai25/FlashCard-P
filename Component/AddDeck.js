@@ -6,12 +6,13 @@ import {saveDeckTitle} from '../utils/api'
 import {addDeck} from '../actions'
 import DeckIndi from './DeckIndi'
 import DeckList from './DeckList'
+import UdaciStatusBar from './UdaciStatusBar'
 
 class AddDeck extends Component {
 	state = {
 		text: ''
 	}
-
+	
   	handleSubmit = () => {
   		const {text} = this.state
   		saveDeckTitle(text)
@@ -25,6 +26,7 @@ class AddDeck extends Component {
 		const value = this.state.text
 		return(
 			<View style = {styles.container}>
+				<UdaciStatusBar/>
 				<Text style = {styles.header}>New Deck</Text>
 				<AntDesign name='book' size = {80} color='#007AFF' />
 				<TextInput 
@@ -53,13 +55,13 @@ const styles = StyleSheet.create({
 	color: '#007AFF',
 	justifyContent: 'center',
 	alignItems: 'center',
-	fontSize: 35,
+	fontSize: 30,
 	marginTop: 20,
 	marginBottom:20,
   },
   inputS:{
 	color: '#007AFF',
-	fontSize: 25,
+	fontSize: 20,
 	justifyContent: 'flex-start',
 	alignItems: 'flex-start',
 	marginTop: 15,

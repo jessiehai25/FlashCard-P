@@ -12,15 +12,15 @@ class AddQuestion extends Component {
 	}
 
   	handleSubmit = (deck) => {
-  		const {goBack} = this.props
   		const {question, answer} = this.state
   		const newQuestion = {
   			question,
   			answer,
   		}
-  		addCardToDeck(newQuestion)
+  		console.log("button", deck)
+  		addCardToDeck(deck, newQuestion)
   		this.props.dispatch(addCard(deck, newQuestion))
-  		goBack()
+  		this.props.navigation.goBack()
   		this.setState(()=>({
   			question: '',
   			answer: '',
@@ -29,24 +29,24 @@ class AddQuestion extends Component {
 	render(){
 		const {question, answer} = this.state
 		const deck = this.props.navigation.state.params.deck
-		console.log(deck)
 		return(
 			<View style = {styles.container}>
+				<Text style = {styles.header}>New Card</Text>
 				<TextInput 
-					onChangeText = {(question) => this.setState(()=> ({question: question}))}
+					onChangeText = {(question)=>this.setState(()=> ({question: question}))}
 					placeholder = 'Please input your new question'
 					value = {question}
 					style = {styles.inputS}
 				>
 				</TextInput>
 				<TextInput 
-					onChangeText = {(answer) => this.setState(()=> ({answer: answer}))}
+					onChangeText = {(answer)=>this.setState(()=> ({answer: answer}))}
 					placeholder = 'Please input the correct answer'
 					value = {answer}
 					style = {styles.inputS}
 				>
 				</TextInput>
-				<TouchableOpacity onPress = {(deck)=>this.handleSubmit} style = {styles.submitBtn}>
+				<TouchableOpacity onPress = {()=>this.handleSubmit(deck)} style = {styles.submitBtn}>
 				<Text style = {styles.submitText}>Submit</Text>
 				</TouchableOpacity>
 			</View>
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
 	marginTop: 20,
 	marginBottom:20,
   },
+  
   inputS:{
 	color: '#007AFF',
 	fontSize: 20,
